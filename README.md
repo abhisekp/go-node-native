@@ -26,9 +26,9 @@ go-node-native/
 │   ├── main.go
 │   ├── package.json
 │   ├── .nvmrc
+│   ├── go.mod
 │   ├── LICENSE
 │   └── shared/
-├── go.mod
 ├── index.js
 ├── .nvmrc
 ├── LICENSE

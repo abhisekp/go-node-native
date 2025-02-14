@@ -23,6 +23,7 @@ go-native/
 ├── example.d.ts
 ├── index.js
 ├── main.go
+├── go.mod
 ├── shared/example.node
 └── package.json
 ```
