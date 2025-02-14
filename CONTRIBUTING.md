@@ -47,7 +47,7 @@ npm install @abhisekp/go-native
 Then, you can import and use the `myHandler` function in your application:
 
 ```javascript
-import {myHandler} from 'go-native';
+import {myHandler} from '@abhisekp/go-native';
 
 (function main() {
     console.log('Output:', myHandler());
