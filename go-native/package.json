@@ -1,6 +1,6 @@
 {
   "name": "@abhisekp/go-native",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "",
   "main": "index.js",
   "keywords": [
@@ -31,7 +31,8 @@
   "files": [
     "shared/example.node",
     "example.d.ts",
-    "index.js"
+    "index.js",
+    "logo.png"
   ],
   "readme": "README.md",
   "license": "MIT",
