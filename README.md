@@ -50,6 +50,14 @@ npm start
 
 This will start the Node.js cli app and execute the Go code using the native module. The output will be displayed in the console.
 
+## Test
+
+Uses `node:test` module to write the test cases.
+
+```bash
+npm test
+```
+
 ## License
 
 This project is licensed under the MIT License. 
