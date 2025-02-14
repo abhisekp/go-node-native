@@ -1,0 +1,14 @@
+{
+  "name": "go-node-native",
+  "version": "0.0.0",
+  "description": "",
+  "license": "MIT",
+  "author": "Abhisek Pattnaik",
+  "type": "commonjs",
+  "types": "example.d.ts",
+  "main": "index.js",
+  "scripts": {
+    "start": "node .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
