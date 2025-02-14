@@ -1,5 +1,9 @@
 # go-node-native
 
+<div align="center">
+<img src="logo.png" alt="go-node-native" width="500" />
+</div>
+
 This project aims to demonstrate the integration of Go and Node.js using native modules. It combines the power of Go for performance-critical tasks and Node.js for its extensive ecosystem and ease of development.
 
 ## Table of Contents
