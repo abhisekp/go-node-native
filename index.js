@@ -1,8 +1,5 @@
-/** @typedef {import("example")} ExampleModule */
-
-/** @type {ExampleModule} */
-const example = require('./shared/example.node');
+import {myHandler} from 'handlers';
 
 (function main() {
-    console.log(example.myHandler());
+    console.log('Output:', myHandler());
 })();

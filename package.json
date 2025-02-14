@@ -4,11 +4,14 @@
   "description": "",
   "license": "MIT",
   "author": "Abhisek Pattnaik",
-  "type": "commonjs",
+  "type": "module",
   "types": "example.d.ts",
   "main": "index.js",
   "scripts": {
     "start": "node .",
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "handlers": "file:handlers"
   }
 }

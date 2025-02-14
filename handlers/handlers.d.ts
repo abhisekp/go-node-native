@@ -1,4 +1,4 @@
-declare module "example" {
+declare module "handlers" {
     /**
      * myHandler calls the native function and returns a string.
      */
