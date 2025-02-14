@@ -1,4 +1,4 @@
-/** @typedef {import("handlers")} ExampleModule */
+/** @typedef {import("example")} ExampleModule */
 
 /** @type {ExampleModule} */
 const native = require('./shared/example.node');
@@ -10,9 +10,9 @@ const native = require('./shared/example.node');
  * @returns {string} The string returned by the native function.
  */
 function myHandler() {
-    return native.myHandler();
+  return native.myHandler();
 }
 
 module.exports = {
-    myHandler,
+  myHandler,
 }

@@ -1,4 +1,4 @@
-declare module "handlers" {
+declare module "@abhisekp/go-native" {
     /**
      * myHandler calls the native function and returns a string.
      */

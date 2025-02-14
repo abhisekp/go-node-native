@@ -1,5 +1,5 @@
-import {myHandler} from 'handlers';
+import {myHandler} from '@abhisekp/go-native';
 
 (function main() {
-    console.log('Output:', myHandler());
+  console.log('Output:', myHandler());
 })();

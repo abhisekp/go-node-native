@@ -172,3 +172,5 @@ temp/
 tmp/
 shared/
 *.node
+lcov.info
+coverage_report/

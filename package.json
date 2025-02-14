@@ -1,17 +1,19 @@
 {
   "name": "go-node-native",
-  "version": "0.0.0",
-  "description": "",
+  "version": "0.0.1",
+  "description": "Node native using Go",
+  "private": true,
   "license": "MIT",
   "author": "Abhisek Pattnaik",
   "type": "module",
-  "types": "example.d.ts",
   "main": "index.js",
   "scripts": {
     "start": "node .",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node --test",
+    "coverage": "node --test --experimental-test-coverage --test-reporter=lcov --test-reporter-destination=lcov.info",
+    "coverage:report": "genhtml --title \"Coverage Report\" --highlight lcov.info -o coverage_report"
   },
   "dependencies": {
-    "handlers": "file:handlers"
+    "@abhisekp/go-native": "file:go-native"
   }
 }

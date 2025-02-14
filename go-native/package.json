@@ -1,0 +1,46 @@
+{
+  "name": "@abhisekp/go-native",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "keywords": [
+    "go",
+    "native",
+    "addon",
+    "nodejs-addon",
+    "node-addon",
+    "nodejs-native",
+    "node-native",
+    "native-addon",
+    "go-addon",
+    "go-native",
+    "go-nodejs-addon",
+    "go-node-native"
+  ],
+  "publishConfig": {
+    "tag": "latest",
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "repository": "https://github.com/abhisekp/go-node-native",
+  "author": {
+    "email": "abhisekp@engineer.com",
+    "name": "Abhisek Pattnaik",
+    "url": "https://about.me/abhisekp"
+  },
+  "files": [
+    "shared/example.node",
+    "example.d.ts",
+    "index.js"
+  ],
+  "readme": "README.md",
+  "license": "MIT",
+  "type": "commonjs",
+  "scripts": {
+    "prepare": "make dev",
+    "clean": "rimraf ./shared"
+  },
+  "dependencies": {
+    "rimraf": "^6.0.1"
+  }
+}

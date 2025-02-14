@@ -1,3 +1,5 @@
+.PHONY: default dev clean
+
 export SHARED_DIR=shared
 export NODE_GYP_DIR=/home/abhisekp/.nvm/versions/node/v22.13.1
 export SHARED_FILE_NAME=example.node
@@ -10,8 +12,11 @@ export CGO_CFLAGS=-I${NODE_GYP_DIR}/include
 export CC=clang
 export CXX=clang++
 
-default:
+default: clean
 	go build -buildmode=c-shared -o "${SHARED_DIR}/${SHARED_FILE_NAME}"
 
-dev:
+dev: clean
 	go build -gcflags="all=-N -l" -buildmode=c-shared -o "${SHARED_DIR}/${SHARED_FILE_NAME}"
+
+clean:
+	npm run clean
