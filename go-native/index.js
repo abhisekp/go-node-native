@@ -10,9 +10,20 @@ const native = require('./shared/example.node');
  * @returns {string} The string returned by the native function.
  */
 function myHandler() {
-  return native.myHandler();
+  return native.myHandler.apply(this, arguments);
+}
+
+/**
+ * Sum two numbers
+ * @param a {number} First Number
+ * @param b {number} Second Number
+ * @returns {number} The sum of two params
+ **/
+function sum(a, b) {
+  return native.sum.apply(this, arguments)
 }
 
 module.exports = {
   myHandler,
+  sum,
 }
