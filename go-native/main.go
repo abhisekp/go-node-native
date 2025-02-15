@@ -23,9 +23,18 @@ func SumHandler(env napi.Env, info napi.CallbackInfo) napi.Value {
 		return nil
 	}
 
-	a, _ := napi.GetValueDouble(env, args.Args[0])
-	b, _ := napi.GetValueDouble(env, args.Args[1])
+	a, status := napi.GetValueDouble(env, args.Args[0])
+	if status != napi.StatusOK {
+		napi.ThrowError(env, "EInvalidValue", "Invalid value for a")
+		return nil
+	}
+	b, status := napi.GetValueDouble(env, args.Args[1])
+	if status != napi.StatusOK {
+		napi.ThrowError(env, "EInvalidValue", "Invalid value for b")
+		return nil
+	}
 
+	fmt.Printf("a = %v, b = %v", a, b)
 	result, _ := napi.CreateDouble(env, Sum(a, b))
 
 	return result

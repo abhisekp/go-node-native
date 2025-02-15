@@ -11,9 +11,19 @@
     "start": "node .",
     "test": "node --test",
     "coverage": "node --test --experimental-test-coverage --test-reporter=lcov --test-reporter-destination=lcov.info",
-    "coverage:report": "genhtml --title \"Coverage Report\" --highlight lcov.info -o coverage_report"
+    "coverage:report": "genhtml --title \"Coverage Report\" --highlight lcov.info -o coverage_report",
+    "prepare": "husky"
   },
   "dependencies": {
     "@abhisekp/go-native": "file:go-native"
+  },
+  "devDependencies": {
+    "eslint-config-prettier": "^10.0.1",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.4.3",
+    "prettier": "3.5.1"
+  },
+  "lint-staged": {
+    "**/*": "prettier --write --ignore-unknown"
   }
 }

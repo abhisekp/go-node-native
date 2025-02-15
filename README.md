@@ -1,5 +1,7 @@
 # go-node-native
 
+[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
+
 <div align="center">
 <img src="logo.png" alt="go-node-native" width="500" />
 </div>
@@ -41,8 +43,9 @@ go-node-native/
 2. Clone this repository: `git clone https://github.com/abhisekp/go-node-native.git`
 3. Navigate to the project directory: `cd go-node-native`
 4. Install project dependencies:
-  - For Node.js: `npm install`
-  - For Go: `go mod download`
+
+- For Node.js: `npm install`
+- For Go: `go mod download`
 
 ## Usage
 
@@ -64,7 +67,7 @@ npm test
 
 ## License
 
-This project is licensed under the MIT License. 
+This project is licensed under the MIT License.
 
 See the [LICENSE](./LICENSE) file for more details.
 

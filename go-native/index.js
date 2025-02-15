@@ -1,8 +1,7 @@
 /** @typedef {import("example")} ExampleModule */
 
 /** @type {ExampleModule} */
-const native = require('./shared/example.node');
-
+const native = require("./shared/example.node");
 
 /**
  * Calls the native function `myHandler` from the Go addon.
@@ -20,10 +19,10 @@ function myHandler() {
  * @returns {number} The sum of two params
  **/
 function sum(a, b) {
-  return native.sum.apply(this, arguments)
+  return native.sum.apply(this, arguments);
 }
 
 module.exports = {
   myHandler,
   sum,
-}
+};
