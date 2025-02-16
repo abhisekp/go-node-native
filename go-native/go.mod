@@ -1,5 +1,5 @@
 module go-node-native
 
-go 1.23
+go 1.24
 
-require github.com/akshayganeshen/napi-go v0.0.0-20220627001427-7ae2cc336fa2
+require github.com/abhisekp/napi-go v0.0.0-20250216122107-42e51791f96e

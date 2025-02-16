@@ -20,3 +20,6 @@ dev: clean
 
 clean:
 	npm run clean
+
+test:
+	go test -race

@@ -14,6 +14,7 @@ function myHandler() {
 
 /**
  * Sum two numbers
+ *
  * @param a {number} First Number
  * @param b {number} Second Number
  * @returns {number} The sum of two params
@@ -22,7 +23,19 @@ function sum(a, b) {
   return native.sum.apply(this, arguments);
 }
 
+/**
+ * Map function for array
+ *
+ * @param arr {string[]|number[]} Array to map
+ * @param cb {(number) => number} Array to map
+ * @returns {string[]|number[]} The mapped array
+ **/
+function map(arr, cb) {
+  return native.map.apply(this, arguments);
+}
+
 module.exports = {
   myHandler,
   sum,
+  map,
 };
