@@ -62,6 +62,8 @@ describe("Native error recovery and output", () => {
     for (const args of [[], [1], [1, 2, 3]]) {
       assert.throws(() => sum(...args), { code: "EArgumentLength" });
     }
+    // Explicit undefined values must count as two arguments, unlike a call with no arguments.
+    // skipcq: JS-W1042
     assert.throws(() => sum(undefined, undefined), { code: "EInvalidValue" });
   });
   it("does not print arguments or debug messages", () => {
