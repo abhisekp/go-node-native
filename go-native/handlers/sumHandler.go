@@ -1,13 +1,15 @@
 package handlers
 
 import (
-	"fmt"
 	"github.com/abhisekp/napi-go"
 	"go-node-native/lib"
 )
 
 func SumHandler(env napi.Env, info napi.CallbackInfo) napi.Value {
-	args, _ := napi.GetCbInfo(env, info)
+	args, status := napi.GetCbInfo(env, info)
+	if status != napi.StatusOK {
+		return nil
+	}
 	if len(args.Args) != 2 {
 		napi.ThrowError(env, "EArgumentLength", "Wrong number of arguments")
 		return nil
@@ -24,8 +26,10 @@ func SumHandler(env napi.Env, info napi.CallbackInfo) napi.Value {
 		return nil
 	}
 
-	fmt.Printf("a = %v, b = %v\n", a, b)
-	result, _ := napi.CreateDouble(env, lib.Sum(a, b))
+	result, status := napi.CreateDouble(env, lib.Sum(a, b))
+	if status != napi.StatusOK {
+		return nil
+	}
 
 	return result
 }

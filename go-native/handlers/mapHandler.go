@@ -1,8 +1,6 @@
 package handlers
 
 import (
-	"C"
-	"fmt"
 	"github.com/abhisekp/napi-go"
 )
 
@@ -22,7 +20,7 @@ func MapHandler(env napi.Env, info napi.CallbackInfo) napi.Value {
 	// Check the first argument is an array
 	isArray, status := napi.IsArray(env, cbInfo.Args[0])
 	if status != napi.StatusOK || !isArray {
-		napi.ThrowError(env, "EStatusInvalidArg", "")
+		napi.ThrowError(env, "EStatusInvalidArg", "First argument must be an array")
 		return nil
 	}
 
@@ -64,8 +62,6 @@ func MapHandler(env napi.Env, info napi.CallbackInfo) napi.Value {
 		if initValueType == napi.ValueTypeUndefined {
 			initValueType = valueType
 		}
-
-		fmt.Printf("ValueType: %s\nInit ValueType: %s\n", valueType, initValueType)
 
 		if valueType != initValueType {
 			napi.ThrowError(env, "EInvalidArg", "All array elements must be of the same type (either string or number)")

@@ -174,3 +174,4 @@ shared/
 *.node
 lcov.info
 coverage_report/
+.cache/

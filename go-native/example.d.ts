@@ -9,10 +9,10 @@ declare module "@abhisekp/go-native" {
   /**
    * sum calls the native sum function taking two numbers and providing a summation.
    **/
-  export function sum<T extends number>(a: T, b: T): T;
+  export function sum(a: number, b: number): number;
 
   /**
    * map applies a native map function to each element of an array and returns a new array.
    */
-  export function map<T extends Ordered>(arr: T[], cb: (item: T) => T): T[];
+  export function map<T extends Ordered, R>(arr: T[], cb: (item: T) => R): R[];
 }

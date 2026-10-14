@@ -1,0 +1,32 @@
+name: Test
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  native:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node: [22, 24, 26]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+          cache: npm
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go-native/go.mod
+          cache-dependency-path: go-native/go.sum
+      - run: sudo apt-get update && sudo apt-get install -y clang libc++-dev
+      - run: npm ci
+      - run: npm run build
+      - run: npm run format:check
+      - run: npm test
+      - run: npm run test:types
+      - run: npm run test:go
+      - run: npm run test:package
+      - run: npm start

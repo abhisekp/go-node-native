@@ -1,7 +1,7 @@
 {
   "name": "@abhisekp/go-native",
   "version": "1.0.4",
-  "description": "",
+  "description": "A Go and Node-API integration example with synchronous sum and map callbacks",
   "main": "index.js",
   "keywords": [
     "go",
@@ -29,20 +29,30 @@
     "url": "https://about.me/abhisekp"
   },
   "files": [
-    "shared/example.node",
     "example.d.ts",
     "index.js",
+    "main.go",
+    "go.mod",
+    "go.sum",
+    "handlers/",
+    "lib/",
+    "scripts/",
     "logo.png"
   ],
   "readme": "README.md",
   "license": "MIT",
   "type": "commonjs",
   "scripts": {
-    "test": "node --test",
-    "prepare": "make dev",
-    "clean": "rimraf ./shared"
+    "build": "node scripts/build.cjs",
+    "build:debug": "node scripts/build.cjs --debug",
+    "install": "node scripts/build.cjs",
+    "clean": "node -e \"require('node:fs').rmSync('shared', { recursive: true, force: true })\""
   },
   "dependencies": {
-    "rimraf": "^6.0.1"
+    "node-gyp": "^11.5.0"
+  },
+  "types": "example.d.ts",
+  "engines": {
+    "node": ">=22"
   }
 }

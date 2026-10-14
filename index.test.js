@@ -51,3 +51,92 @@ describe("Test", () => {
     });
   });
 });
+import { spawnSync } from "node:child_process";
+
+// Execute in a separate process so an addon crash or leaked output fails this test.
+describe("Native error recovery and output", () => {
+  it("does not print arguments or debug messages", () => {
+    const result = spawnSync(
+      process.execPath,
+      [
+        "--input-type=module",
+        "-e",
+        `
+      import { sum, map, myHandler } from '@abhisekp/go-native';
+      myHandler(); sum(123, 456); map(['private input'], value => value);
+    `,
+      ],
+      { encoding: "utf8", timeout: 10000 },
+    );
+    assert.equal(result.status, 0, result.stderr);
+    assert.equal(result.stdout, "");
+    assert.equal(result.stderr, "");
+  });
+  it("preserves callback exceptions and remains usable", () => {
+    const error = new Error("callback failed");
+    assert.throws(
+      () =>
+        map([1], () => {
+          throw error;
+        }),
+      (thrown) => thrown === error,
+    );
+    assert.equal(sum(2, 3), 5);
+    assert.deepStrictEqual(
+      map([1], (value) => value + 1),
+      [2],
+    );
+  });
+  it("handles string input, empty arrays and arbitrary callback results", () => {
+    assert.deepStrictEqual(
+      map(["a", "bb"], (value) => value.length),
+      [1, 2],
+    );
+    assert.deepStrictEqual(
+      map([1, 2], (value) => ({ value })),
+      [{ value: 1 }, { value: 2 }],
+    );
+    assert.deepStrictEqual(
+      map([1], () => undefined),
+      [undefined],
+    );
+    assert.deepStrictEqual(
+      map([], () => {
+        throw new Error("must not run");
+      }),
+      [],
+    );
+  });
+  it("rejects wrong arity, holes and unsupported elements", () => {
+    for (const args of [[], [[1]], [[1], (value) => value, 3]]) {
+      assert.throws(() => map(...args), Error);
+    }
+    for (const input of [new Array(2), [true], [null], [{}], [1n], [1, "a"]]) {
+      assert.throws(() => map(input, (value) => value), Error);
+    }
+    assert.deepStrictEqual(
+      map([3], (value) => value),
+      [3],
+    );
+  });
+  it("propagates throwing array accessors without crashing", () => {
+    const error = new Error("getter failed");
+    const input = [1];
+    Object.defineProperty(input, 0, {
+      get() {
+        throw error;
+      },
+    });
+    assert.throws(
+      () => map(input, (value) => value),
+      (thrown) => thrown === error,
+    );
+    assert.equal(myHandler(), "MyHandler");
+  });
+  it("uses JavaScript number precision and rejects coercion", () => {
+    assert.equal(sum(1.25, -0.5), 0.75);
+    assert.ok(Number.isNaN(sum(NaN, 1)));
+    assert.equal(sum(Infinity, 1), Infinity);
+    for (const value of [null, undefined, true, 1n, {}, "2"]) assert.throws(() => sum(value, 1), Error);
+  });
+});

@@ -1,4 +1,4 @@
-/** @typedef {import("example")} ExampleModule */
+/** @typedef {typeof import("./example")} ExampleModule */
 
 /** @type {ExampleModule} */
 const native = require("./shared/example.node");
@@ -26,9 +26,11 @@ function sum(a, b) {
 /**
  * Map function for array
  *
- * @param arr {string[]|number[]} Array to map
- * @param cb {(number) => number} Array to map
- * @returns {string[]|number[]} The mapped array
+ * @template {number|string} T
+ * @template R
+ * @param {T[]} arr Array to map
+ * @param {(item: T) => R} cb Callback invoked with each element
+ * @returns {R[]} The mapped array
  **/
 function map(arr, cb) {
   return native.map.apply(this, arguments);
