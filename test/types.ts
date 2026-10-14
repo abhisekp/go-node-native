@@ -12,4 +12,4 @@ const greeting: string = myHandler();
 map([true], (value) => value);
 // @ts-expect-error sum requires numbers.
 sum("1", 2);
-void [total, explicitTotal, explicitMap, literal, strings, lengths, objects, greeting];
+export { total, explicitTotal, explicitMap, literal, strings, lengths, objects, greeting };

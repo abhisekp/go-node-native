@@ -55,6 +55,15 @@ import { spawnSync } from "node:child_process";
 
 // Execute in a separate process so an addon crash or leaked output fails this test.
 describe("Native error recovery and output", () => {
+  it("preserves wrapper lengths and native argument-count errors", () => {
+    assert.equal(myHandler.length, 0);
+    assert.equal(sum.length, 2);
+    assert.equal(map.length, 2);
+    for (const args of [[], [1], [1, 2, 3]]) {
+      assert.throws(() => sum(...args), { code: "EArgumentLength" });
+    }
+    assert.throws(() => sum(undefined, undefined), { code: "EInvalidValue" });
+  });
   it("does not print arguments or debug messages", () => {
     const result = spawnSync(
       process.execPath,

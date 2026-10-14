@@ -8,19 +8,18 @@ const native = require("./shared/example.node");
  *
  * @returns {string} The string returned by the native function.
  */
-function myHandler() {
-  return native.myHandler.apply(this, arguments);
+function myHandler(...args) {
+  return native.myHandler.apply(this, args);
 }
 
 /**
  * Sum two numbers
  *
- * @param a {number} First Number
- * @param b {number} Second Number
+ * @param {[a: number, b: number]} args The two numbers to add
  * @returns {number} The sum of two params
  **/
-function sum(a, b) {
-  return native.sum.apply(this, arguments);
+function sum(...args) {
+  return native.sum.apply(this, args);
 }
 
 /**
@@ -28,13 +27,16 @@ function sum(a, b) {
  *
  * @template {number|string} T
  * @template R
- * @param {T[]} arr Array to map
- * @param {(item: T) => R} cb Callback invoked with each element
+ * @param {[arr: T[], cb: (item: T) => R]} args Array and callback invoked with each element
  * @returns {R[]} The mapped array
  **/
-function map(arr, cb) {
-  return native.map.apply(this, arguments);
+function map(...args) {
+  return native.map.apply(this, args);
 }
+
+// Preserve public function lengths while forwarding every argument to native validation.
+Object.defineProperty(sum, "length", { value: 2 });
+Object.defineProperty(map, "length", { value: 2 });
 
 module.exports = {
   myHandler,

@@ -12,9 +12,9 @@ function run(command, args, cwd = temp) {
 }
 try {
   const packed = JSON.parse(run("npm", ["pack", "./go-native", "--json", "--pack-destination", temp], root))[0];
-  assert.ok(packed.files.some(({ path }) => path === "main.go"));
-  assert.ok(packed.files.some(({ path }) => path === "scripts/build.cjs"));
-  assert.ok(!packed.files.some(({ path }) => path.endsWith(".node")));
+  assert.ok(packed.files.some(({ path: filePath }) => filePath === "main.go"));
+  assert.ok(packed.files.some(({ path: filePath }) => filePath === "scripts/build.cjs"));
+  assert.ok(!packed.files.some(({ path: filePath }) => filePath.endsWith(".node")));
   writeFileSync(path.join(temp, "package.json"), JSON.stringify({ private: true }));
   run("npm", ["install", "--no-audit", "--no-fund", path.join(temp, packed.filename)]);
   const checks = `const assert = require('node:assert/strict');
