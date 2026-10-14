@@ -4,7 +4,7 @@ Go-backed synchronous `myHandler`, `sum` and `map` functions for Node.js.
 
 ## Build requirements
 
-Linux, Node.js 22+, Go 1.24+, clang and libc++ development files. Install from a source package with npm; the install script downloads matching Node.js headers and builds the native addon. Windows users can use WSL with Linux tooling. Windows and macOS native builds are not verified with the pinned `napi-go` dependency.
+Linux, Node.js 22+, Go 1.24+, clang and libc++ development files. Install from a source package with npm; the install script uses the Node.js team's `node-api-headers` package and builds the native addon without a separate header download. Windows users can use WSL with Linux tooling. Windows and macOS native builds are not verified with the pinned `napi-go` dependency.
 
 For offline headers, set `NODE_INCLUDE_DIR` to the parent directory containing `node/node_api.h`. Go and npm dependencies must already be cached.
 

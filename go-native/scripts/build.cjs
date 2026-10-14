@@ -1,5 +1,5 @@
 const { spawnSync } = require("node:child_process");
-const { existsSync, mkdirSync } = require("node:fs");
+const { cpSync, existsSync, mkdirSync } = require("node:fs");
 const path = require("node:path");
 const { endianness } = require("node:os");
 
@@ -31,15 +31,10 @@ try {
 
   let includeDir = process.env.NODE_INCLUDE_DIR;
   if (!includeDir) {
-    const devDir = path.join(root, ".cache", "node-gyp");
-    run(process.execPath, [
-      require.resolve("node-gyp/bin/node-gyp.js"),
-      "install",
-      "--ensure",
-      `--target=${process.versions.node}`,
-      `--devdir=${devDir}`,
-    ]);
-    includeDir = path.join(devDir, process.versions.node, "include");
+    includeDir = path.join(root, ".cache", "headers");
+    mkdirSync(includeDir, { recursive: true });
+    // napi-go includes node/node_api.h; arrange the packaged headers under that prefix.
+    cpSync(require("node-api-headers").include_dir, path.join(includeDir, "node"), { recursive: true });
   }
   includeDir = path.resolve(includeDir);
   if (!existsSync(path.join(includeDir, "node", "node_api.h"))) {

@@ -9,7 +9,7 @@ Start with the requirements and setup in [README.md](README.md). Use Linux (or W
 - `go-native/main.go`: registers native exports through the pinned `napi-go` dependency.
 - `go-native/handlers/`: Node-API validation and JavaScript callbacks.
 - `go-native/lib/`: pure Go helpers and unit tests.
-- `go-native/scripts/build.cjs`: matching header discovery and Go shared-library build.
+- `go-native/scripts/build.cjs`: packaged Node-API headers and Go shared-library build.
 - `go-native/index.js` and `example.d.ts`: CommonJS wrapper and TypeScript API.
 - `test/`: TypeScript contract and packed-consumer verification.
 

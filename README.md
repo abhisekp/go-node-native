@@ -6,7 +6,7 @@ A small integration example that calls Go from Node.js through Node-API. The exa
 
 - Linux with Node.js 22 or newer, Go 1.24 or newer, clang and libc++ development files.
 - On Ubuntu/Debian: `sudo apt-get install clang libc++-dev`.
-- Internet access for npm dependencies, the pinned Go module and Node.js headers during the first build.
+- Internet access for npm dependencies and the pinned Go module during the first build.
 
 The pinned `napi-go` dependency has platform-specific compiler/linker flags. Linux is the supported build target in this repository; Windows and macOS builds are not verified. On Windows, use WSL and install **Linux** Node.js and Go inside that environment. Do not load a Linux `.node` file into Windows Node.js.
 
@@ -20,7 +20,7 @@ npm run build
 npm start
 ```
 
-The build downloads headers matching the running Node.js version using node-gyp and compiles `go-native/shared/example.node`. It no longer depends on a developer-specific Node.js path or requires Make. For offline headers, set `NODE_INCLUDE_DIR` to the directory containing `node/node_api.h`; Go and npm dependencies must already be cached. `CC`, `CXX` and `CGO_CFLAGS` can be overridden for a compatible toolchain.
+The build uses the Node.js team's `node-api-headers` package and compiles `go-native/shared/example.node`. Node-API headers are backward-compatible across supported Node.js versions, so a separate header download is unnecessary. The build does not depend on a developer-specific Node.js path or require Make. To use your own headers, set `NODE_INCLUDE_DIR` to the directory containing `node/node_api.h`; Go and npm dependencies must already be cached for offline builds. `CC`, `CXX` and `CGO_CFLAGS` can be overridden for a compatible toolchain.
 
 ## API
 
