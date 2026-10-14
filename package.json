@@ -9,10 +9,15 @@
   "main": "index.js",
   "scripts": {
     "start": "node .",
-    "test": "node --test",
-    "coverage": "node --test --experimental-test-coverage --test-reporter=lcov --test-reporter-destination=lcov.info",
+    "test": "node --test index.test.js",
+    "coverage": "node --test --experimental-test-coverage --test-reporter=lcov --test-reporter-destination=lcov.info index.test.js",
     "coverage:report": "genhtml --title \"Coverage Report\" --highlight lcov.info -o coverage_report",
-    "prepare": "husky"
+    "prepare": "husky",
+    "build": "npm run build --prefix go-native",
+    "format:check": "prettier --check .",
+    "test:types": "tsc --noEmit --strict --module node16 --moduleResolution node16 test/types.ts",
+    "test:go": "cd go-native && go test -race ./lib",
+    "test:package": "node test/package-smoke.cjs"
   },
   "dependencies": {
     "@abhisekp/go-native": "file:go-native"
@@ -20,10 +25,14 @@
   "devDependencies": {
     "eslint-config-prettier": "^10.0.1",
     "husky": "^9.1.7",
-    "lint-staged": "^15.4.3",
-    "prettier": "3.5.1"
+    "lint-staged": "^17.6.0",
+    "prettier": "3.5.1",
+    "typescript": "^5.9.3"
   },
   "lint-staged": {
     "**/*": "prettier --write --ignore-unknown"
+  },
+  "engines": {
+    "node": ">=22"
   }
 }

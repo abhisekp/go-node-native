@@ -1,76 +1,60 @@
 # go-node-native
 
-[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
+A small integration example that calls Go from Node.js through Node-API. The example exports three synchronous functions: `myHandler`, `sum` and `map`.
 
-<div align="center">
-<img src="logo.png" alt="go-node-native" width="500" />
-</div>
+## Requirements and platform support
 
-This project aims to demonstrate the integration of Go and Node.js using native modules. It combines the power of Go for performance-critical tasks and Node.js for its extensive ecosystem and ease of development.
+- Linux with Node.js 22 or newer, Go 1.24 or newer, clang and libc++ development files.
+- On Ubuntu/Debian: `sudo apt-get install clang libc++-dev`.
+- Internet access for npm dependencies and the pinned Go module during the first build.
 
-## Table of Contents
+The pinned `napi-go` dependency has platform-specific compiler/linker flags. Linux is the supported build target in this repository; Windows and macOS builds are not verified. On Windows, use WSL and install **Linux** Node.js and Go inside that environment. Do not load a Linux `.node` file into Windows Node.js.
 
-- [Project Structure](#project-structure)
-- [Getting Started](#getting-started)
-- [Usage](#usage)
-- [License](#license)
+## Getting started
 
-## Project Structure
-
-The project's directory structure is as follows:
-
-```
-go-node-native/
-├── go-native/
-│   ├── Makefile
-│   ├── example.d.ts
-│   ├── index.js
-│   ├── main.go
-│   ├── package.json
-│   ├── .nvmrc
-│   ├── go.mod
-│   ├── LICENSE
-│   └── shared/
-├── index.js
-├── .nvmrc
-├── LICENSE
-└── package.json
-```
-
-## Getting Started
-
-1. Install Node.js and Go on your system.
-2. Clone this repository: `git clone https://github.com/abhisekp/go-node-native.git`
-3. Navigate to the project directory: `cd go-node-native`
-4. Install project dependencies:
-
-- For Node.js: `npm install`
-- For Go: `go mod download`
-
-## Usage
-
-To run the project, execute the following command in the project directory:
-
-```bash
+```sh
+git clone https://github.com/abhisekp/go-node-native.git
+cd go-node-native
+npm ci
+npm run build
 npm start
 ```
 
-This will start the Node.js cli app and execute the Go code using the native module. The output will be displayed in the console.
+The build uses the Node.js team's `node-api-headers` package and compiles `go-native/shared/example.node`. Node-API headers are backward-compatible across supported Node.js versions, so a separate header download is unnecessary. The build does not depend on a developer-specific Node.js path or require Make. To use your own headers, set `NODE_INCLUDE_DIR` to the directory containing `node/node_api.h`; Go and npm dependencies must already be cached for offline builds. `CC`, `CXX` and `CGO_CFLAGS` can be overridden for a compatible toolchain.
 
-## Test
+## API
 
-Uses `node:test` module to write the test cases.
+```js
+import { myHandler, sum, map } from "@abhisekp/go-native";
 
-```bash
-npm test
+myHandler(); // "MyHandler"
+sum(1, 2); // 3
+map([1, 2, 3], (value) => value * value); // [1, 4, 9]
+map(["a", "bb"], (value) => value.length); // [1, 2]
 ```
 
-## License
+CommonJS `require` is also supported. TypeScript declarations are included.
 
-This project is licensed under the MIT License.
+- `myHandler()` returns `"MyHandler"`.
+- `sum(a, b)` requires exactly two JavaScript numbers. It uses double precision, including JavaScript's `NaN` and infinity behavior; it does not coerce strings or support BigInt.
+- `map(array, callback)` requires exactly two arguments and a dense, homogeneous array of numbers or strings. It calls the callback synchronously with **only the element**, and returns a new array. Callback results can have any type. Empty arrays return an empty array. Sparse arrays, mixed input types and unsupported input values throw. Callback/getter exceptions propagate unchanged. Validation occurs as each element is visited, so earlier callbacks may have run when a later invalid element is encountered.
 
-See the [LICENSE](./LICENSE) file for more details.
+These helpers demonstrate an integration boundary; calling Go for trivial sums or JavaScript callbacks is not a performance optimization. The functions do not print arguments or diagnostic output.
 
-## Contributing
+## Verification
 
-See [CONTRIBUTING](./CONTRIBUTING.md)
+```sh
+npm run format:check
+npm test
+npm run test:types
+npm run test:go
+npm run test:package
+```
+
+The package smoke test packs the addon, installs it into a fresh consumer (building from source), then checks CommonJS, ESM and TypeScript imports. CI runs these checks plus the example on Linux with Node.js 22, 24 and 26. The Go tests exercise pure domain helpers; Node.js tests exercise the native boundary, invalid input and recovery after exceptions.
+
+## Packaging
+
+`npm pack ./go-native` produces a source package with an install-time build. This avoids shipping a binary for the packer's operating system/architecture to every consumer. Consumers need the build prerequisites above. Package or release publication is a separate step; local packing does not publish anything.
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for development instructions and [LICENSE](LICENSE) for the MIT license.
