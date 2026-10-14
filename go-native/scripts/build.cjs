@@ -1,6 +1,7 @@
 const { spawnSync } = require("node:child_process");
 const { existsSync, mkdirSync } = require("node:fs");
 const path = require("node:path");
+const { endianness } = require("node:os");
 
 const root = path.resolve(__dirname, "..");
 
@@ -21,7 +22,10 @@ try {
   const target = spawnSync("go", ["env", "GOOS", "GOARCH"], { cwd: root, encoding: "utf8" });
   if (target.error) throw target.error;
   if (target.status !== 0) throw new Error("Go is required to build the native addon.");
-  if (target.stdout.trim() !== `linux\n${process.arch === "x64" ? "amd64" : process.arch}`) {
+  const goArch =
+    { x64: "amd64", ia32: "386", ppc64: endianness() === "LE" ? "ppc64le" : "ppc64", mipsel: "mipsle" }[process.arch] ||
+    process.arch;
+  if (target.stdout.trim() !== `linux\n${goArch}`) {
     throw new Error("Go must target the platform and architecture of the running Node.js process.");
   }
 
